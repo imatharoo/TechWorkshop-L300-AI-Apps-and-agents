@@ -23,7 +23,11 @@ COPY . .
 
 # Create .env file from secret mount (more secure than build args)
 RUN --mount=type=secret,id=env_content \
-    cat /run/secrets/env_content > .env || echo "Warning: ENV secret not provided"
+    if [ -f /run/secrets/env_content ]; then \
+        cat /run/secrets/env_content > .env; \
+    else \
+        echo "ERROR: ENV secret not provided. Build will fail." && exit 1; \
+    fi
 
 # Expose the port (default FastAPI/uvicorn port)
 EXPOSE 8000

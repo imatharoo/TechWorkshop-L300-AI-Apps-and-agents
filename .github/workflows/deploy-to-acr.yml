@@ -32,5 +32,5 @@ jobs:
           tags: |
             ${{ secrets.ACR_REGISTRY }}/techworkshop:latest
             ${{ secrets.ACR_REGISTRY }}/techworkshop:${{ github.sha }}
-          build-args: |
-            ENV_CONTENT=${{ secrets.ENV }}
+          secrets: |
+            env_content=${{ secrets.ENV }}
